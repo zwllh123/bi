@@ -6,4 +6,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="CustomEntity\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Duzhi.Common" Version="3.2.3.2" />
+  </ItemGroup>
+
 </Project>

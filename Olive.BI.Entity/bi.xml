@@ -1,0 +1,386 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityModel xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:schemaLocation="https://newlifex.com https://newlifex.com/Model202509.xsd" Document="https://newlifex.com/xcode/model" ModelVersion="2.0.2026.130" xmlns="https://newlifex.com/Model202509.xsd">
+  <Option>
+    <!--类名模板。其中{name}替换为Table.Name，如{name}Model/I{name}Dto等-->
+    <ClassNameTemplate />
+    <!--显示名模板。其中{displayName}替换为Table.DisplayName-->
+    <DisplayNameTemplate />
+    <!--基类。可能包含基类和接口，其中{name}替换为Table.Name-->
+    <BaseClass>Entity</BaseClass>
+    <!--命名空间-->
+    <Namespace>Olive.BI.Entity</Namespace>
+    <!--引用命名空间-->
+    <ExtendNameSpace />
+    <!--输出目录-->
+    <Output>.\Entity</Output>
+    <!--是否使用中文文件名。默认false-->
+    <ChineseFileName>True</ChineseFileName>
+    <!--用于生成Copy函数的参数类型。例如{name}或I{name}-->
+    <ModelNameForCopy>{name}Entity</ModelNameForCopy>
+    <!--带有索引器。实现IModel接口-->
+    <HasIModel>True</HasIModel>
+    <!--可为null上下文。生成String?等-->
+    <Nullable>True</Nullable>
+    <!--数据库连接名-->
+    <ConnName>OliveBI</ConnName>
+    <!--模型类模版。设置后生成模型类，用于接口数据传输，例如{name}Model-->
+    <ModelClass>{name}Entity</ModelClass>
+    <!--模型类输出目录。默认当前目录的Models子目录-->
+    <ModelsOutput>.\Models\</ModelsOutput>
+    <!--模型接口模版。设置后生成模型接口，用于约束模型类和实体类，例如I{name}-->
+    <ModelInterface />
+    <!--模型接口输出目录。默认当前目录的Interfaces子目录-->
+    <InterfacesOutput>.\Interfaces\</InterfacesOutput>
+    <!--用户实体转为模型类的模型类。例如{name}或{name}DTO-->
+    <ModelNameForToModel />
+    <!--命名格式。Default/Upper/Lower/Underline-->
+    <NameFormat>Default</NameFormat>
+    <!--魔方区域显示名-->
+    <DisplayName>橄榄云-BI</DisplayName>
+    <!--魔方控制器输出目录-->
+    <CubeOutput />
+  </Option>
+  <Tables>
+    <Table Name="Authority" Description="权限菜单。运营权限表，菜单/按钮树形结构">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="ParentTarget" DataType="String" Length="64" Description="父菜单代码" />
+        <Column Name="Target" DataType="String" Master="True" Length="64" Nullable="False" Description="菜单代码" />
+        <Column Name="TargetName" DataType="String" Length="128" Nullable="False" Description="菜单名称" />
+        <Column Name="Action" DataType="String" Length="64" Nullable="False" Description="按钮代码" />
+        <Column Name="ActionName" DataType="String" Length="128" Nullable="False" Description="按钮名称" />
+        <Column Name="Sort" DataType="Int32" Description="排序" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记。0-禁用 1-启用" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记。0-未删除 1-已删除" />
+        <Column Name="CreateUser" DataType="String" Length="64" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="64" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="Target,Action" Unique="True" />
+        <Index Columns="ParentTarget" />
+      </Indexes>
+    </Table>
+    <Table Name="Role" Description="角色。运营角色表">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="RoleCode" DataType="String" Master="True" Length="32" Nullable="False" Description="角色编码" />
+        <Column Name="RoleName" DataType="String" Length="64" Nullable="False" Description="角色名称" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记。0-禁用 1-启用" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记。0-未删除 1-已删除" />
+        <Column Name="CreateUser" DataType="String" Length="64" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="64" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="RoleCode" Unique="True" />
+      </Indexes>
+    </Table>
+    <Table Name="RoleAuthority" Description="角色权限。角色与权限关联">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="RoleCode" DataType="String" Length="32" Nullable="False" Description="角色编码" />
+        <Column Name="Target" DataType="String" Length="64" Nullable="False" Description="权限目标" />
+        <Column Name="Action" DataType="String" Length="64" Nullable="False" Description="权限动作" />
+      </Columns>
+      <Indexes>
+        <Index Columns="RoleCode" />
+        <Index Columns="RoleCode,Target,Action" Unique="True" />
+      </Indexes>
+    </Table>
+    <Table Name="User" Description="用户。运营用户表">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="LoginName" DataType="String" Master="True" Length="64" Nullable="False" Description="登录名" />
+        <Column Name="RealName" DataType="String" Length="64" Nullable="False" Description="真实姓名" />
+        <Column Name="Password" DataType="String" Length="128" Nullable="False" Description="密码。32位MD5" />
+        <Column Name="Phone" DataType="String" Length="16" Description="手机号码" />
+        <Column Name="Email" DataType="String" Length="64" Description="邮箱" />
+        <Column Name="Remark" DataType="String" Length="512" Description="备注" />
+        <Column Name="LastLoginTime" DataType="DateTime" Description="最后登录时间" />
+        <Column Name="LastLoginIP" DataType="String" Length="16" Description="最后登录IP" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记。0-禁用 1-启用" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记。0-未删除 1-已删除" />
+        <Column Name="CreateUser" DataType="String" Length="64" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="64" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="LoginName" Unique="True" />
+      </Indexes>
+    </Table>
+    <Table Name="UserRole" Description="用户角色。用户与角色关联">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="LoginName" DataType="String" Length="32" Nullable="False" Description="登录名" />
+        <Column Name="RoleCode" DataType="String" Length="32" Nullable="False" Description="角色编码" />
+      </Columns>
+      <Indexes>
+        <Index Columns="LoginName" />
+        <Index Columns="LoginName,RoleCode" Unique="True" />
+      </Indexes>
+    </Table>
+    <Table Name="Dict" Description="数据字典">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="DictName" DataType="String" Master="True" Length="64" Nullable="False" Description="字典名称" />
+        <Column Name="DictCode" DataType="String" Length="64" Nullable="False" Description="字典编码" />
+        <Column Name="Remark" DataType="String" Length="64" Description="备注" />
+        <Column Name="CreateUser" DataType="String" Length="64" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="64" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="DictCode" Unique="True" />
+      </Indexes>
+    </Table>
+    <Table Name="DictItem" Description="字典项">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="DictCode" DataType="String" Length="64" Description="字典编码" />
+        <Column Name="ItemName" DataType="String" Master="True" Length="64" Nullable="False" Description="字典项名称" />
+        <Column Name="ItemValue" DataType="String" Length="64" Nullable="False" Description="字典项值" />
+        <Column Name="ItemExtend" DataType="String" Length="2048" Description="字典扩展项" />
+        <Column Name="Enabled" DataType="Int32" DefaultValue="1" Description="启用。1-启用 0-禁用" />
+        <Column Name="Locale" DataType="String" Length="16" Description="语言标识" />
+        <Column Name="Remark" DataType="String" Length="64" Description="备注" />
+        <Column Name="Sort" DataType="Int32" Description="排序" />
+        <Column Name="CreateUser" DataType="String" Length="64" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="64" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="DictCode" />
+        <Index Columns="DictCode,ItemValue" />
+      </Indexes>
+    </Table>
+    <Table Name="GaeaFile" Description="文件。文件管理">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="FileId" DataType="String" Master="True" Length="64" Description="文件唯一UUID" />
+        <Column Name="FileType" DataType="String" Length="20" Description="文件类型" />
+        <Column Name="FilePath" DataType="String" Length="1024" Description="文件存储路径" />
+        <Column Name="UrlPath" DataType="String" Length="1024" Description="文件下载Http路径" />
+        <Column Name="FileInstruction" DataType="String" Length="1024" Description="文件内容说明" />
+        <Column Name="CreateUser" DataType="String" Length="64" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="64" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="FileId" />
+      </Indexes>
+    </Table>
+    <Table Name="Report" Description="报表。报表主表">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="ReportName" DataType="String" Master="True" Length="100" Description="报表名称" />
+        <Column Name="ReportCode" DataType="String" Length="100" Description="报表编码" />
+        <Column Name="ReportGroup" DataType="String" Length="100" Description="报表分组" />
+        <Column Name="ReportType" DataType="String" Length="20" Description="报表类型。report_screen/report_excel" />
+        <Column Name="ReportImage" DataType="String" Length="512" Description="报表缩略图" />
+        <Column Name="ReportDesc" DataType="String" Length="255" Description="报表描述" />
+        <Column Name="ReportAuthor" DataType="String" Length="512" Description="报表作者" />
+        <Column Name="DownloadCount" DataType="Int64" Description="下载次数" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记。0-禁用 1-启用" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记。0-未删除 1-已删除" />
+        <Column Name="CreateUser" DataType="String" Length="255" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="255" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="ReportCode" Unique="True" />
+        <Index Columns="ReportGroup" />
+        <Index Columns="ReportType" />
+      </Indexes>
+    </Table>
+    <Table Name="ReportDashboard" Description="大屏看板。大屏报表配置">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="看板编号" />
+        <Column Name="ReportCode" DataType="String" Master="True" Nullable="False" Description="报表编码" />
+        <Column Name="Title" DataType="String" Length="254" Description="看板标题" />
+        <Column Name="Width" DataType="Int64" Description="画布宽度px" />
+        <Column Name="Height" DataType="Int64" Description="画布高度px" />
+        <Column Name="BackgroundColor" DataType="String" Length="24" Description="背景颜色" />
+        <Column Name="BackgroundImage" DataType="String" Length="254" Description="背景图片" />
+        <Column Name="PresetLine" DataType="String" Length="4096" Description="工作台辅助线" />
+        <Column Name="RefreshSeconds" DataType="Int32" Description="自动刷新间隔秒" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记" />
+        <Column Name="Sort" DataType="Int32" DefaultValue="0" Description="排序" />
+        <Column Name="CreateUser" DataType="String" Length="64" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="64" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="ReportCode" Unique="True" />
+      </Indexes>
+    </Table>
+    <Table Name="ReportDashboardWidget" Description="大屏组件。大屏中的组件配置">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="组件编号" />
+        <Column Name="ReportCode" DataType="String" Nullable="False" Description="报表编码" />
+        <Column Name="Type" DataType="String" Description="组件类型。字典DASHBOARD_PANEL_TYPE" />
+        <Column Name="Setup" DataType="String" Length="-1" Description="渲染属性json" />
+        <Column Name="Data" DataType="String" Length="-1" Description="数据属性json" />
+        <Column Name="Collapse" DataType="String" Length="-1" Description="配置属性json" />
+        <Column Name="Position" DataType="String" Length="-1" Description="大小位置json" />
+        <Column Name="Options" DataType="String" Length="-1" Description="options配置项" />
+        <Column Name="RefreshSeconds" DataType="Int32" Description="自动刷新间隔秒" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记" />
+        <Column Name="Sort" DataType="Int64" DefaultValue="0" Description="排序（图层）" />
+        <Column Name="CreateUser" DataType="String" Length="64" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="64" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="ReportCode" />
+      </Indexes>
+    </Table>
+    <Table Name="ReportDataSet" Description="数据集。数据集管理">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="SetCode" DataType="String" Master="True" Description="数据集编码" />
+        <Column Name="SetName" DataType="String" Length="100" Description="数据集名称" />
+        <Column Name="SetDesc" DataType="String" Length="255" Description="数据集描述" />
+        <Column Name="SourceCode" DataType="String" Description="数据源编码" />
+        <Column Name="DynSentence" DataType="String" Length="2048" Description="动态查询SQL或请求体" />
+        <Column Name="CaseResult" DataType="String" Length="-1" Description="结果案例" />
+        <Column Name="SetType" DataType="String" Length="10" Description="数据集类型。sql/http" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记" />
+        <Column Name="CreateUser" DataType="String" Length="255" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="255" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="SetCode" Unique="True" />
+        <Index Columns="SourceCode" />
+      </Indexes>
+    </Table>
+    <Table Name="ReportDataSetParam" Description="数据集参数。数据集查询参数">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="SetCode" DataType="String" Description="数据集编码" />
+        <Column Name="ParamName" DataType="String" Master="True" Description="参数名" />
+        <Column Name="ParamDesc" DataType="String" Length="100" Description="参数描述" />
+        <Column Name="ParamType" DataType="String" Length="255" Description="参数类型" />
+        <Column Name="SampleItem" DataType="String" Length="1080" Description="参数示例项" />
+        <Column Name="RequiredFlag" DataType="Int32" DefaultValue="1" Description="是否必填。0-否 1-是" />
+        <Column Name="ValidationRules" DataType="String" Length="2048" Description="JS校验规则" />
+        <Column Name="OrderNum" DataType="Int32" Description="排序" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记" />
+        <Column Name="CreateUser" DataType="String" Length="255" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="255" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="SetCode" />
+      </Indexes>
+    </Table>
+    <Table Name="ReportDataSetTransform" Description="数据集转换。数据集结果转换规则">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="SetCode" DataType="String" Description="数据集编码" />
+        <Column Name="TransformType" DataType="String" Master="True" Description="转换类型。js/javaBean/dict" />
+        <Column Name="TransformScript" DataType="String" Length="-1" Description="转换脚本/处理逻辑" />
+        <Column Name="OrderNum" DataType="Int32" Description="排序" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记" />
+        <Column Name="CreateUser" DataType="String" Length="255" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="255" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="SetCode" />
+      </Indexes>
+    </Table>
+    <Table Name="ReportDataSource" Description="数据源。数据源管理">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="SourceCode" DataType="String" Master="True" Length="100" Description="数据源编码" />
+        <Column Name="SourceName" DataType="String" Length="100" Description="数据源名称" />
+        <Column Name="SourceDesc" DataType="String" Length="255" Description="数据源描述" />
+        <Column Name="SourceType" DataType="String" Description="数据源类型。字典SOURCE_TYPE" />
+        <Column Name="SourceConfig" DataType="String" Length="2048" Description="连接配置json" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记" />
+        <Column Name="CreateUser" DataType="String" Length="255" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="255" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="SourceCode" Unique="True" />
+      </Indexes>
+    </Table>
+    <Table Name="ReportExcel" Description="Excel报表。Excel类型报表配置">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="ReportCode" DataType="String" Master="True" Length="100" Description="报表编码" />
+        <Column Name="SetCodes" DataType="String" Length="255" Description="数据集编码列表，以|分割" />
+        <Column Name="SetParam" DataType="String" Length="1024" Description="数据集查询参数" />
+        <Column Name="JsonStr" DataType="String" Length="-1" Description="报表json串" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记" />
+        <Column Name="CreateUser" DataType="String" Length="255" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="255" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="ReportCode" Unique="True" />
+      </Indexes>
+    </Table>
+    <Table Name="ReportShare" Description="报表分享。报表分享配置">
+      <Columns>
+        <Column Name="Id" DataType="Int32" Identity="True" PrimaryKey="True" Description="编号" />
+        <Column Name="ShareCode" DataType="String" Master="True" Description="分享编码。UUID" />
+        <Column Name="ShareValidType" DataType="Int32" Description="分享有效期类型。字典SHARE_VAILD" />
+        <Column Name="ShareValidTime" DataType="DateTime" Description="分享有效期" />
+        <Column Name="ShareToken" DataType="String" Length="255" Description="分享Token" />
+        <Column Name="ShareUrl" DataType="String" Length="100" Description="分享URL" />
+        <Column Name="SharePassword" DataType="String" Length="10" Description="分享密码" />
+        <Column Name="ReportCode" DataType="String" Description="报表编码" />
+        <Column Name="EnableFlag" DataType="Int32" DefaultValue="1" Description="启用标记" />
+        <Column Name="DeleteFlag" DataType="Int32" DefaultValue="0" Description="删除标记" />
+        <Column Name="CreateUser" DataType="String" Length="255" Description="创建者" Model="False" Category="扩展" />
+        <Column Name="CreateTime" DataType="DateTime" Description="创建时间" Model="False" Category="扩展" />
+        <Column Name="UpdateUser" DataType="String" Length="255" Description="更新者" Model="False" Category="扩展" />
+        <Column Name="UpdateTime" DataType="DateTime" Description="更新时间" Model="False" Category="扩展" />
+        <Column Name="Version" DataType="Int32" Description="版本号" Model="False" Category="扩展" />
+      </Columns>
+      <Indexes>
+        <Index Columns="ShareCode" Unique="True" />
+        <Index Columns="ReportCode" />
+      </Indexes>
+    </Table>
+  </Tables>
+</EntityModel>
